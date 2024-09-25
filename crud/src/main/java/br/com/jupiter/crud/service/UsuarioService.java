@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import br.com.jupiter.crud.entity.Usuario;
 import br.com.jupiter.crud.repository.UsuarioRepository;
@@ -45,14 +44,7 @@ public class UsuarioService {
     }
 
     public Usuario editar(Long id, Usuario usuario) throws EntityNotFoundException {
-        Usuario usuarioDB = this.getById(id);
-        usuarioDB.setNome(usuario.getNome());
-        usuarioDB.setUserName(usuario.getUserName());
-        usuarioDB.setEmail(usuario.getEmail());
-        usuarioDB.setPassword(usuario.getPassword());
-        usuarioDB.setPermissoes(usuario.getPermissoes());
-        usuarioDB.setCargo(usuario.getCargo());
-        usuarioDB.setProjeto(usuario.getProjeto());
-        return usuarioRepository.save(usuarioDB);
+        this.getById(id);
+        return usuarioRepository.save(usuario);
     }
 }

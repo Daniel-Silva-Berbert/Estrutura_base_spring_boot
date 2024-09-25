@@ -13,13 +13,13 @@ public class Permissao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	private int nome;
+	private String nome;
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setNome(int nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -27,7 +27,7 @@ public class Permissao {
         return id;
     }
 
-    public int getNome() {
+    public String getNome() {
         return nome;
     }
 }

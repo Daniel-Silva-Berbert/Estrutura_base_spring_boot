@@ -45,9 +45,7 @@ public class ProjetoService {
     }
 
     public Projeto editar(Long id, Projeto projeto) throws EntityNotFoundException {
-        Projeto projetoDB = this.getById(id);
-        projetoDB.setNome(projeto.getNome());
-        projetoDB.setUsuario(projeto.getUsuario());
-        return projetoRepository.save(projetoDB);
+        this.getById(id);
+        return projetoRepository.save(projeto);
     }
 }

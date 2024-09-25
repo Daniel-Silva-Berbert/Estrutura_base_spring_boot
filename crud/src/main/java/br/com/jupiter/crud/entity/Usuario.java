@@ -117,7 +117,7 @@ public class Usuario {
         return password;
     }
 
-    public List<Permissao> getPermissoes() {
+    public Set<Permissao> getPermissoes() {
         return permissoes;
     }
 
