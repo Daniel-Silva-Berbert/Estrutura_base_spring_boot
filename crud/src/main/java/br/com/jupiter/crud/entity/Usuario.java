@@ -36,14 +36,14 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "usuarios")
     private Set<Permissao> permissoes;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cargo_id", referencedColumnName = "id")
     private Cargo cargo;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany( fetch = FetchType.LAZY)
     @JoinTable(
         name = "usuarios_projetos",
         joinColumns = @JoinColumn(name = "usuario_id"),

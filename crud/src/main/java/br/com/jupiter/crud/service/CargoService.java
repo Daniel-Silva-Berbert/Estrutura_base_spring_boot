@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.jupiter.crud.entity.Cargo;

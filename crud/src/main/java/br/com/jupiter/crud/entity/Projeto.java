@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,7 +22,7 @@ public class Projeto {
     @Column(nullable = false)
     private String nome;
 
-    @ManyToMany(mappedBy = "projeto")
+    @ManyToMany(mappedBy = "projetos")
     private List<Usuario> usuarios;
 
     public void setId(Long id) {
