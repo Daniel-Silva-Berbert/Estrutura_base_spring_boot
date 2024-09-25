@@ -1,5 +1,6 @@
 package br.com.jupiter.crud.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,9 +14,9 @@ public class Cargo {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-	private String nome;
+    private String nome;
 
-	private float remuneracao;
+	  private float remuneracao;
 
     public Cargo(){}
     public Cargo(Long id, String nome, float remuneracao)

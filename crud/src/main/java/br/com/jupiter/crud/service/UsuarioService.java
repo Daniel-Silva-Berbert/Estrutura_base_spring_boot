@@ -2,6 +2,7 @@ package br.com.jupiter.crud.service;
 
 import java.util.List;
 
+import br.com.jupiter.crud.service.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,9 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Usuario getById(Long id) throws NotFoundException{
-        return usuarioRepository.findById(id).orElseThrow();
+    public Usuario getById(Long id) throws EntityNotFoundException  {
+        return usuarioRepository.findById(id)
+          .orElseThrow(() -> new EntityNotFoundException("Usuario", id));
     }
 
     //verificar depois filtro
@@ -36,13 +38,13 @@ public class UsuarioService {
             return null;
     }
 
-    public Usuario delete(Long id) throws NotFoundException{
+    public Usuario delete(Long id) throws EntityNotFoundException {
         Usuario usuarioDB = this.getById(id);
         usuarioRepository.deleteById(id);
         return usuarioDB;
     }
 
-    public Usuario editar(Long id, Usuario usuario) throws NotFoundException{
+    public Usuario editar(Long id, Usuario usuario) throws EntityNotFoundException {
         Usuario usuarioDB = this.getById(id);
         usuarioDB.setNome(usuario.getNome());
         usuarioDB.setUserName(usuario.getUserName());

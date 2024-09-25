@@ -2,8 +2,8 @@ package br.com.jupiter.crud.service;
 
 import java.util.List;
 
+import br.com.jupiter.crud.service.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.jupiter.crud.entity.Projeto;
@@ -28,8 +28,9 @@ public class ProjetoService {
         return projetoRepository.findAll();
     }
 
-    public Projeto getById(Long id) throws NotFoundException{
-        return projetoRepository.findById(id).orElseThrow();
+    public Projeto getById(Long id) throws EntityNotFoundException {
+        return projetoRepository.findById(id)
+          .orElseThrow(() -> new EntityNotFoundException("Projeto", id));
     }
 
     //verificar depois filtro
@@ -37,13 +38,13 @@ public class ProjetoService {
             return null;
     }
 
-    public Projeto delete(Long id) throws NotFoundException{
+    public Projeto delete(Long id) throws EntityNotFoundException {
         Projeto projetoDB = this.getById(id);
         projetoRepository.deleteById(id);
         return projetoDB;
     }
 
-    public Projeto editar(Long id, Projeto projeto) throws NotFoundException{
+    public Projeto editar(Long id, Projeto projeto) throws EntityNotFoundException {
         Projeto projetoDB = this.getById(id);
         projetoDB.setNome(projeto.getNome());
         projetoDB.setUsuario(projeto.getUsuario());
