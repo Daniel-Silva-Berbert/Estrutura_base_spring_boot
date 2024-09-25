@@ -1,8 +1,12 @@
 package br.com.jupiter.crud.entity;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,6 +19,9 @@ public class Cargo {
     private String nome;
 
 	private float remuneracao;
+
+    @OneToMany( cascade = CascadeType.ALL)
+    private List<Usuario> usuarios;
 
     public Cargo(){}
     public Cargo(Long id, String nome, float remuneracao)
