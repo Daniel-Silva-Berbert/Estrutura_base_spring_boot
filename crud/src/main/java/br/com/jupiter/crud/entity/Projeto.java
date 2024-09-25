@@ -1,9 +1,14 @@
 package br.com.jupiter.crud.entity;
 
+import java.util.List;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,9 +19,12 @@ public class Projeto {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-	private String nome;
+	
+    @Column(nullable = false)
+    private String nome;
 
-	private Usuario[] usuario;
+    @ManyToMany(mappedBy = "projeto")
+    private List<Usuario> usuarios;
 
     public void setId(Long id) {
         this.id = id;
@@ -26,17 +34,19 @@ public class Projeto {
         this.nome = nome;
     }
 
-    public void setUsuario(Usuario[] usuario) {
-        this.usuario = usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuarios.add(usuario);
     }
+
     public Long getId() {
         return id;
     }
+
     public String getNome() {
         return nome;
     }
 
-    public Usuario[] getUsuario() {
-        return usuario;
+    public List<Usuario> getUsuario() {
+        return usuarios;
     }
 }

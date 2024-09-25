@@ -1,8 +1,19 @@
 package br.com.jupiter.crud.entity;
+import java.util.List;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,23 +24,36 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	private String nome;
+	@Column(nullable = false)
+    private String nome;
 
-	private String userName;
+    @Column(unique = true, nullable = false)
+    private String userName;
 
-	private String email;
+    @Column(nullable = false)
+    private String email;
 
-	private String password;
+    @Column(nullable = false)
+    private String password;
 
-	private Permissao permissoes;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Set<Permissao> permissoes;
 
-	private Cargo cargo;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cargo_id", referencedColumnName = "id")
+    private Cargo cargo;
 
-	private Projeto[] projeto;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "usuarios_projetos",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "projeto_id")
+    )
+    private List<Projeto> projetos;
 
     public Usuario(){}
 
-    public Usuario(Long id, String nome, String userName, String email, String password, Permissao permissoes, Cargo cargo, Projeto[] projetos)
+    public Usuario(Long id, String nome, String userName, String email, String password, Permissao permissoes, Cargo cargo, Projeto projeto)
     {
         setId(id);
         setNome(nome);
@@ -38,7 +62,7 @@ public class Usuario {
         setPassword(password);
         setPermissoes(permissoes);
         setCargo(cargo);
-        setProjeto(projetos);
+        setProjeto(projeto);
     }
 
     public void setId(Long id) {
@@ -62,15 +86,15 @@ public class Usuario {
     }
 
     public void setPermissoes(Permissao permissoes) {
-        this.permissoes = permissoes;
+        this.permissoes.add(permissoes);
     }
 
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
 
-    public void setProjeto(Projeto[] projeto) {
-        this.projeto = projeto;
+    public void setProjeto(Projeto projeto) {
+        this.projetos.add(projeto);
     }
 
     public Long getId() {
@@ -93,7 +117,7 @@ public class Usuario {
         return password;
     }
 
-    public Permissao getPermissoes() {
+    public List<Permissao> getPermissoes() {
         return permissoes;
     }
 
@@ -101,7 +125,7 @@ public class Usuario {
         return cargo;
     }
 
-    public Projeto[] getProjeto() {
-        return projeto;
+    public List<Projeto> getProjetos() {
+        return projetos;
     }
 }
