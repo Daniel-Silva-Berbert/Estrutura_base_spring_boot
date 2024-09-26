@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.jupiter.crud.entity.Cargo;
 
-public interface CargoRepository extends JpaRepository <Cargo, Long>{
+import java.util.List;
 
+public interface CargoRepository extends JpaRepository <Cargo, Long>{
+  List<Cargo> findByNomeContainingIgnoreCase(String nome);
 }

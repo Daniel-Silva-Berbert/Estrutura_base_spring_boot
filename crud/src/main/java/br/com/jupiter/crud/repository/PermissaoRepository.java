@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.jupiter.crud.entity.Permissao;
 
-public interface PermissaoRepository extends JpaRepository<Permissao, Long>{
+import java.util.List;
 
+public interface PermissaoRepository extends JpaRepository<Permissao, Long>{
+  List<Permissao> findByNomeContainingIgnoreCase(String nome);
 }

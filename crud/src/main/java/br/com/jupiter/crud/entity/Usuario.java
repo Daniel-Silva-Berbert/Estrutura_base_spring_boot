@@ -1,4 +1,5 @@
 package br.com.jupiter.crud.entity;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -13,8 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,7 +24,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	@Column(nullable = false)
+	  @Column(nullable = false)
     private String nome;
 
     @Column(unique = true, nullable = false)
@@ -38,7 +37,7 @@ public class Usuario {
     private String password;
 
     @ManyToMany(mappedBy = "usuarios")
-    private Set<Permissao> permissoes;
+    private List<Permissao> permissoes = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cargo_id", referencedColumnName = "id")
@@ -50,7 +49,7 @@ public class Usuario {
         joinColumns = @JoinColumn(name = "usuario_id"),
         inverseJoinColumns = @JoinColumn(name = "projeto_id")
     )
-    private List<Projeto> projetos;
+    private List<Projeto> projetos = new ArrayList<>();
 
     public Usuario(){}
 
@@ -64,6 +63,13 @@ public class Usuario {
         setPermissoes(permissoes);
         setCargo(cargo);
         setProjeto(projeto);
+    }
+
+    public Usuario(String nome, String userName, String email, String password) {
+        this.nome = nome;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
     }
 
     public void setId(Long id) {
@@ -118,7 +124,7 @@ public class Usuario {
         return password;
     }
 
-    public Set<Permissao> getPermissoes() {
+    public List<Permissao> getPermissoes() {
         return permissoes;
     }
 

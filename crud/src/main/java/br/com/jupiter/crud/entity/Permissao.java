@@ -1,5 +1,6 @@
 package br.com.jupiter.crud.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -15,11 +16,12 @@ import jakarta.persistence.Table;
 @Entity
 @Table (name="permissoes")
 public class Permissao {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	private String nome;
+	  private String nome;
 
     @ManyToMany( fetch = FetchType.LAZY)
     @JoinTable(
@@ -27,7 +29,19 @@ public class Permissao {
         joinColumns = @JoinColumn(name = "permissoes_id"),
         inverseJoinColumns = @JoinColumn(name = "usuario_id")
     )
-    private List<Usuario> usuarios;
+    private List<Usuario> usuarios = new ArrayList<>();
+
+    public Permissao() {}
+
+    public Permissao(String nome) {
+        this.nome = nome;
+    }
+
+    public Permissao(Long id, List<Usuario> usuarios, String nome) {
+        this.id = id;
+        this.usuarios = usuarios;
+        this.nome = nome;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -43,5 +57,13 @@ public class Permissao {
 
     public String getNome() {
         return nome;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 }

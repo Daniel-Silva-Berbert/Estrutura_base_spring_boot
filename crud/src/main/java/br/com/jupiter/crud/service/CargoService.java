@@ -3,6 +3,7 @@ package br.com.jupiter.crud.service;
 import java.util.List;
 
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
+import br.com.jupiter.crud.service.exception.NameNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,6 @@ public class CargoService {
     }
     
     public Cargo salvar(Cargo cargo) {
-        
         return cargoRepository.save(cargo);
     }
 
@@ -33,9 +33,12 @@ public class CargoService {
           .orElseThrow(() -> new EntityNotFoundException("Cargo", id));
     }
 
-    //verificar depois filtro
-    public Cargo getByFilter(String busca) {
-            return null;
+    public List<Cargo> getByName(String cargo) throws NameNotFoundException {
+        List<Cargo> cargos = cargoRepository.findByNomeContainingIgnoreCase(cargo);
+        if (cargos.isEmpty()) {
+            throw new NameNotFoundException("Cargo", cargo);
+        }
+        return cargos;
     }
 
     public Cargo delete(Long id) throws EntityNotFoundException {

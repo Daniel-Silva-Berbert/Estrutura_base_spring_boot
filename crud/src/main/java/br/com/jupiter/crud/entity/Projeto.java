@@ -1,5 +1,6 @@
 package br.com.jupiter.crud.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -23,7 +24,18 @@ public class Projeto {
     private String nome;
 
     @ManyToMany(mappedBy = "projetos")
-    private List<Usuario> usuarios;
+    private List<Usuario> usuarios = new ArrayList<>();
+
+    public Projeto() {}
+
+    public Projeto(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
+    public Projeto(String nome) {
+        this.nome = nome;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -45,7 +57,7 @@ public class Projeto {
         return nome;
     }
 
-    public List<Usuario> getUsuario() {
+    public List<Usuario> getUsuarios() {
         return usuarios;
     }
 }

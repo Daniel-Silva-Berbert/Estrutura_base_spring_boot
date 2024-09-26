@@ -3,6 +3,7 @@ package br.com.jupiter.crud.service;
 import java.util.List;
 
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
+import br.com.jupiter.crud.service.exception.NameNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +34,12 @@ public class PermissaoService {
           .orElseThrow(() -> new EntityNotFoundException("Permissão", id));
     }
 
-    //verificar depois filtro
-    public Permissao getByFilter(String busca) {
-            return null;
+    public List<Permissao> getByName(String permissao) throws NameNotFoundException {
+        List<Permissao> permissoes = permissaoRepository.findByNomeContainingIgnoreCase(permissao);
+        if (permissoes.isEmpty()) {
+            throw new NameNotFoundException("Permissão", permissao);
+        }
+        return permissoes;
     }
 
     public Permissao delete(Long id) throws EntityNotFoundException {

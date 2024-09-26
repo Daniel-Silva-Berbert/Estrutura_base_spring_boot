@@ -1,7 +1,6 @@
 package br.com.jupiter.crud.entity;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,21 +11,21 @@ import jakarta.persistence.Table;
 @Entity
 @Table (name="cargos")
 public class Cargo {
+
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
 
-	private float remuneracao;
+	  private Float remuneracao;
 
-    @OneToMany( cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cargo")
     private List<Usuario> usuarios;
 
     public Cargo(){}
-    public Cargo(Long id, String nome, float remuneracao)
+    public Cargo(String nome, Float remuneracao)
     {
-        setId(id);
         setNome(nome);
         setRemuneracao(remuneracao);
     }
@@ -37,7 +36,7 @@ public class Cargo {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public void setRemuneracao(float remuneracao) {
+    public void setRemuneracao(Float remuneracao) {
         this.remuneracao = remuneracao;
     }
 

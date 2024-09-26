@@ -3,6 +3,7 @@ package br.com.jupiter.crud.service;
 import java.util.List;
 
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
+import br.com.jupiter.crud.service.exception.NameNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +34,12 @@ public class ProjetoService {
           .orElseThrow(() -> new EntityNotFoundException("Projeto", id));
     }
 
-    //verificar depois filtro
-    public Projeto getByFilter(String busca) {
-            return null;
+    public List<Projeto> getByName(String projeto) throws NameNotFoundException {
+        List<Projeto> projetos = projetoRepository.findByNomeContainingIgnoreCase(projeto);
+        if(projetos.isEmpty()) {
+            throw new NameNotFoundException("Projeto", projeto);
+        }
+        return projetos;
     }
 
     public Projeto delete(Long id) throws EntityNotFoundException {

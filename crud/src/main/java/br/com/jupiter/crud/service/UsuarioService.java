@@ -2,7 +2,11 @@ package br.com.jupiter.crud.service;
 
 import java.util.List;
 
+import br.com.jupiter.crud.entity.Cargo;
+import br.com.jupiter.crud.entity.Permissao;
+import br.com.jupiter.crud.entity.Projeto;
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
+import br.com.jupiter.crud.service.exception.NameNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.jupiter.crud.entity.Usuario;
@@ -11,11 +15,23 @@ import br.com.jupiter.crud.repository.UsuarioRepository;
 @Service
 public class UsuarioService {
     private UsuarioRepository usuarioRepository;
+    private CargoService cargoService;
+    private ProjetoService projetoService;
+    private PermissaoService permissaoService;
+
 
     @Autowired
-    public UsuarioService(UsuarioRepository cargoRepository)
+    public UsuarioService(
+      UsuarioRepository usuarioRepository,
+      CargoService cargoService,
+      ProjetoService projetoService,
+      PermissaoService permissaoService
+    )
     {
-        this.usuarioRepository = cargoRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.cargoService = cargoService;
+        this.projetoService = projetoService;
+        this.permissaoService = permissaoService;
     }
     
     public Usuario salvar(Usuario usuario) {
@@ -32,9 +48,12 @@ public class UsuarioService {
           .orElseThrow(() -> new EntityNotFoundException("Usuario", id));
     }
 
-    //verificar depois filtro
-    public Usuario getByFilter(String busca) {
-            return null;
+    public List<Usuario> getByName(String usuario) throws NameNotFoundException {
+        List<Usuario> usuarios = usuarioRepository.findByNomeContainingIgnoreCase(usuario);
+        if(usuarios.isEmpty()) {
+            throw new NameNotFoundException("Usuario", usuario);
+        }
+        return usuarios;
     }
 
     public Usuario delete(Long id) throws EntityNotFoundException {
@@ -45,6 +64,63 @@ public class UsuarioService {
 
     public Usuario editar(Long id, Usuario usuario) throws EntityNotFoundException {
         this.getById(id);
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario setUsuarioCargo(Long usuarioId, Long cargoId) throws EntityNotFoundException {
+        Usuario usuario = getById(usuarioId);
+        Cargo cargo = cargoService.getById(cargoId);
+
+        usuario.setCargo(cargo);
+
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario removeUsuarioCargo(Long usuarioId) throws EntityNotFoundException {
+        Usuario usuario = getById(usuarioId);
+
+        usuario.setCargo(null);
+
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario addUsuarioProjeto(Long usarioId, Long projetoId) throws EntityNotFoundException {
+        Usuario usuario = getById(usarioId);
+
+        Projeto projeto = projetoService.getById(projetoId);
+
+        usuario.getProjetos().add(projeto);
+
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario removesuarioProjeto(Long usarioId, Long projetoId) throws EntityNotFoundException {
+        Usuario usuario = getById(usarioId);
+
+        Projeto projeto = projetoService.getById(projetoId);
+
+        usuario.getProjetos().remove(projeto);
+
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario addUsuarioPermissao(Long usarioId, Long permissaoId) throws EntityNotFoundException {
+        Usuario usuario = getById(usarioId);
+
+        Permissao permissao = permissaoService.getById(permissaoId);
+
+        permissao.getUsuarios().add(usuario);
+
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario removeUsuarioPermissao(Long usarioId, Long permissaoId) throws EntityNotFoundException {
+        Usuario usuario = getById(usarioId);
+
+        Permissao permissao = permissaoService.getById(permissaoId);
+
+        permissao.getUsuarios().remove(usuario);
+
         return usuarioRepository.save(usuario);
     }
 }
