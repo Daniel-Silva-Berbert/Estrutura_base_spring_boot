@@ -19,7 +19,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table (name="usuarios")
-public class Usuario extends Pessoa{
+public class Usuario extends Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,10 +74,12 @@ public class Usuario extends Pessoa{
         setProjeto(projeto);
     }
 
-    public Usuario(String nome, String userName, String email, String password) {
+    public Usuario(String nome, String userName, String email, String cpf, LocalDate nascimento  ,String password) {
         this.nome = nome;
         this.userName = userName;
         this.email = email;
+        this.cpf = cpf;
+        this.nascimento = nascimento;
         this.password = password;
     }
 

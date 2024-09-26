@@ -2,6 +2,7 @@ package br.com.jupiter.crud.controller.dto;
 
 import br.com.jupiter.crud.entity.Usuario;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public record UsuarioDto(
@@ -9,6 +10,7 @@ public record UsuarioDto(
   String nome,
   String userName,
   String email,
+  LocalDate nascimento,
   CargoDto cargo,
   List<ProjetoDto> projetos,
   List<PermissaoDto> permissoes
@@ -23,6 +25,7 @@ public record UsuarioDto(
       usuario.getNome(),
       usuario.getUserName(),
       usuario.getEmail(),
+      usuario.getNascimento(),
       cargoDto,
       usuario.getProjetos().stream()
         .map(ProjetoDto::fromEntity).toList(),
