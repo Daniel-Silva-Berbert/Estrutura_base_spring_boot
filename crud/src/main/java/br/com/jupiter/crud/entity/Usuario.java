@@ -15,10 +15,11 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table (name="usuarios")
-public class Usuario {
+public class Usuario extends Pessoa{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +27,12 @@ public class Usuario {
 
 	  @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false)
+    private String cpf;
+
+    @Column(nullable = false)
+    private LocalDate nascimento;
 
     @Column(unique = true, nullable = false)
     private String userName;
@@ -53,10 +60,12 @@ public class Usuario {
 
     public Usuario(){}
 
-    public Usuario(Long id, String nome, String userName, String email, String password, Permissao permissoes, Cargo cargo, Projeto projeto)
+    public Usuario(Long id, String nome, String cpf, LocalDate nascimento, String userName, String email, String password, Permissao permissoes, Cargo cargo, Projeto projeto)
     {
         setId(id);
         setNome(nome);
+        setCpf(cpf);
+        setNascimento(nascimento);
         setUserName(userName);
         setEmail(email);
         setPassword(password);
@@ -78,6 +87,14 @@ public class Usuario {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+    
+    public void setNascimento(LocalDate nascimento) {
+        this.nascimento = nascimento;
     }
 
     public void setUserName(String userName) {
@@ -112,6 +129,14 @@ public class Usuario {
         return nome;
     }
 
+    public String getCpf() {
+        return this.cpf;
+    }
+    
+    public LocalDate getNascimento() {
+        return this.nascimento;
+    }
+    
     public String getUserName() {
         return userName;
     }
@@ -136,3 +161,5 @@ public class Usuario {
         return projetos;
     }
 }
+
+
