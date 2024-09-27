@@ -5,8 +5,8 @@ Este projeto é uma aplicação backend que utiliza **Java** com o framework **S
 ## Autores
 
 - Bruno de Medeiros - [brunomedeirosluz](https://github.com/brunomedeirosluz)
-- Daniel Berbert [Daniel-Silva-Berbert](https://github.com/Daniel-Silva-Berbert)
-- Matheus CasaGrande [M-Casagrande](https://github.com/M-Casagrande)
+- Daniel Berbert - [Daniel-Silva-Berbert](https://github.com/Daniel-Silva-Berbert)
+- Matheus CasaGrande - [M-Casagrande](https://github.com/M-Casagrande)
 
 ## Documentação da API
 
