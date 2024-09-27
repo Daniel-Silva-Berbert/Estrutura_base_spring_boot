@@ -7,6 +7,7 @@ import br.com.jupiter.crud.entity.Usuario;
 import br.com.jupiter.crud.service.UsuarioService;
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
 import br.com.jupiter.crud.service.exception.NameNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -44,14 +45,14 @@ public class UsuarioController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public UsuarioDto salvar(@RequestBody UsuarioCreationDto usuarioCreationDto) {
+  public UsuarioDto salvar(@RequestBody @Valid  UsuarioCreationDto usuarioCreationDto) {
     return UsuarioDto.fromEntity(
       usuarioService.salvar(usuarioCreationDto.toEntity())
     );
   }
 
   @PutMapping("/{id}")
-  public UsuarioDto editar(@PathVariable Long id, @RequestBody UsuarioCreationDto usuarioCreationDto)
+  public UsuarioDto editar(@PathVariable Long id, @RequestBody @Valid UsuarioCreationDto usuarioCreationDto)
     throws EntityNotFoundException {
     return UsuarioDto.fromEntity(
       usuarioService.editar(id, usuarioCreationDto.toEntity())

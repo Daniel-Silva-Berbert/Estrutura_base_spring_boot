@@ -4,10 +4,15 @@ import br.com.jupiter.crud.service.exception.ApplicationException;
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
 import br.com.jupiter.crud.service.exception.InvalidDataException;
 import br.com.jupiter.crud.service.exception.NameNotFoundException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -17,6 +22,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+
   @ExceptionHandler(EntityNotFoundException.class)
   public ResponseEntity<Map<String, Object>> handleEntityNotFoundException(EntityNotFoundException ex) {
     Map<String, Object> errorDetails = new HashMap<>();
@@ -25,6 +31,18 @@ public class GlobalExceptionHandler {
     errorDetails.put("status", HttpStatus.NOT_FOUND.value());
 
     return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+    String errorMessage = ex.getMessage();
+    if (errorMessage.contains("Key (user_name)")) {
+      return new ResponseEntity<>("O username já está em uso. Escolha outro.", HttpStatus.BAD_REQUEST);
+    }
+    if (errorMessage.contains("Key (cpf)")) {
+      return new ResponseEntity<>("O CPF já está em uso. Escolha outro.", HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>("Erro de integridade de dados.", HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(NameNotFoundException.class)
@@ -56,7 +74,17 @@ public class GlobalExceptionHandler {
 
     return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
   }
-  
+
+  @ExceptionHandler(ConstraintViolationException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public Map<String, String> handleConstraintViolationError(ConstraintViolationException exception) {
+    Map<String, String> errors = new HashMap<>();
+    for (ConstraintViolation<?> violation : exception.getConstraintViolations()) {
+      errors.put(violation.getPropertyPath().toString(), violation.getMessage());
+    }
+    return errors;
+  }
+
   @ExceptionHandler(Exception.class)
   public ResponseEntity<Map<String, Object>> handleGlobalException(Exception ex) {
     Map<String, Object> errorDetails = new HashMap<>();
@@ -66,4 +94,13 @@ public class GlobalExceptionHandler {
 
     return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
   }
+
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseEntity<String> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+    String message = String.format("O campo '%s' recebeu um valor de tipo inválido. Esperado: %s",
+      ex.getName(), ex.getRequiredType().getSimpleName());
+    return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+  }
+
 }

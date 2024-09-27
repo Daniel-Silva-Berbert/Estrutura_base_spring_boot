@@ -6,6 +6,7 @@ import br.com.jupiter.crud.entity.Projeto;
 import br.com.jupiter.crud.service.ProjetoService;
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
 import br.com.jupiter.crud.service.exception.NameNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -43,14 +44,14 @@ public class ProjetoController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public ProjetoDto salvar(@RequestBody ProjetoCreationDto projetoCreationDto) {
+  public ProjetoDto salvar(@RequestBody @Valid ProjetoCreationDto projetoCreationDto) {
     return ProjetoDto.fromEntity(
       projetoService.salvar(projetoCreationDto.toEntity())
     );
   }
 
   @PutMapping("/{id}")
-  public ProjetoDto editar(@PathVariable Long id, @RequestBody ProjetoCreationDto projetoCreationDto) throws EntityNotFoundException {
+  public ProjetoDto editar(@PathVariable Long id, @RequestBody @Valid ProjetoCreationDto projetoCreationDto) throws EntityNotFoundException {
     return ProjetoDto.fromEntity(
       projetoService.editar(id, projetoCreationDto.toEntity())
     );

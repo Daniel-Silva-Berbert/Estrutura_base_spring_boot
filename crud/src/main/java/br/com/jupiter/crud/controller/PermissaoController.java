@@ -6,6 +6,7 @@ import br.com.jupiter.crud.entity.Permissao;
 import br.com.jupiter.crud.service.PermissaoService;
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
 import br.com.jupiter.crud.service.exception.NameNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -43,14 +44,14 @@ public class PermissaoController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public PermissaoDto salvar(@RequestBody PermissaoCreationDto permissaoCreationDto) {
+  public PermissaoDto salvar(@RequestBody @Valid PermissaoCreationDto permissaoCreationDto) {
     return PermissaoDto.fromEntity(
       permissaoService.salvar(permissaoCreationDto.toEntity())
     );
   }
 
   @PutMapping("/{id}")
-  public PermissaoDto editar(@PathVariable Long id, @RequestBody PermissaoCreationDto permissaoCreationDto) throws EntityNotFoundException {
+  public PermissaoDto editar(@PathVariable Long id, @RequestBody @Valid PermissaoCreationDto permissaoCreationDto) throws EntityNotFoundException {
     return PermissaoDto.fromEntity(
       permissaoService.editar(id, permissaoCreationDto.toEntity())
     );

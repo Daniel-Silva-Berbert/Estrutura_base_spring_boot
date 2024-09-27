@@ -10,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table (name="projetos")
@@ -19,7 +21,9 @@ public class Projeto {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-	
+
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "O nome deve conter apenas letras e espaços.")
     @Column(nullable = false)
     private String nome;
 

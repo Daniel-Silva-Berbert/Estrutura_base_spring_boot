@@ -15,6 +15,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.br.CPF;
+
 import java.time.LocalDate;
 
 @Entity
@@ -25,21 +28,31 @@ public class Usuario extends Pessoa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "O nome deve conter apenas letras e espaços.")
+    @NotBlank
 	  @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
+    @NotBlank
+    @CPF
+    @Column(unique = true, nullable = false)
     private String cpf;
 
+    @NotNull
     @Column(nullable = false)
     private LocalDate nascimento;
 
+    @NotBlank
     @Column(unique = true, nullable = false)
     private String userName;
 
+    @NotBlank
+    @Email
     @Column(nullable = false)
     private String email;
 
+    @Size(min = 6, message = "A senha deve ter no mínimo 6 caracteres.")
+    @NotBlank
     @Column(nullable = false)
     private String password;
 
