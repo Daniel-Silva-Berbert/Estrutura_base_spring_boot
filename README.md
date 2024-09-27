@@ -2,6 +2,12 @@
 
 Este projeto é uma aplicação backend que utiliza **Java** com o framework **Spring**, gerenciamento de dependências com **Maven**, persistência de dados com **Hibernate**, e documentação de API com **Swagger**.
 
+## Autores
+
+- [brunomedeirosluz](https://github.com/brunomedeirosluz)
+- [Daniel-Silva-Berbert](https://github.com/Daniel-Silva-Berbert)
+- [M-Casagrande](https://github.com/M-Casagrande)
+
 ## Documentação da API
 
 A API é documentada usando **Swagger**. Você pode acessar a documentação através do seguinte link:
@@ -56,7 +62,7 @@ A tabela `Cargo` contém as seguintes colunas e relacionamentos:
 
 O projeto foi desenvolvido utilizando as seguintes tecnologias:
 
-- **Java**: Linguagem de programação.
+- **Java 21**: Linguagem de programação.
 - **Spring Boot**: Framework para desenvolvimento de aplicações Java.
 - **Maven**: Ferramenta de automação de build e gerenciamento de dependências.
 - **Hibernate**: Framework ORM (Object Relational Mapping) para persistência de dados.
@@ -73,9 +79,9 @@ Para executar este projeto localmente, siga os passos abaixo:
    
 2. Abra o projeto em sua IDE preferida.
 
-2. Configure o banco de dados e as credenciais de conexão no arquivo `application.properties`.
+3. Configure o banco de dados e as credenciais de conexão no arquivo `application.properties`.
 
-3. Execute o projeto como uma aplicação Spring Boot, utilizando o seguinte comando:
+4. Execute o projeto como uma aplicação Spring Boot, utilizando o seguinte comando:
 
    ```bash
    mvn spring-boot:run
