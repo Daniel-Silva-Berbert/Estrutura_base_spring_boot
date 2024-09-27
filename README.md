@@ -14,9 +14,15 @@ A API é documentada usando **Swagger**. Você pode acessar a documentação atr
 
 - [Documentação Swagger](http://localhost:8080/swagger-ui/index.html#/)
 
-## Estrutura do Banco de Dados
+## Diagrama UML
 
 ![Descrição da imagem](entity.png)
+
+## Estrutura do Banco de Dados
+
+### Diagrama Relacional
+
+![Descrição da imagem](bancodedados.png)
 
 O projeto conta com quatro tabelas principais no banco de dados:
 
