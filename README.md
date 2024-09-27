@@ -75,7 +75,7 @@ Para executar este projeto localmente, siga os passos abaixo:
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/seu-usuario/nome-do-repositorio.git
+   git clone git@github.com:Daniel-Silva-Berbert/Estrutura_base_spring_boot.git
    
 2. Abra o projeto em sua IDE preferida.
 
