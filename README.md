@@ -1,4 +1,4 @@
-# Projeto de API REST com Java, Spring, Maven e Hibernate
+# Projeto de API REST com Java, Spring, PostgresSQL, Maven e Hibernate
 
 Este projeto é uma aplicação backend que utiliza **Java** com o framework **Spring**, gerenciamento de dependências com **Maven**, persistência de dados com **Hibernate**, e documentação de API com **Swagger**.
 
@@ -64,6 +64,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 - **Java 21**: Linguagem de programação.
 - **Spring Boot**: Framework para desenvolvimento de aplicações Java.
+- **PostgreSQL**: Banco de dados relacional utilizado para armazenar os dados da aplicação.
 - **Maven**: Ferramenta de automação de build e gerenciamento de dependências.
 - **Hibernate**: Framework ORM (Object Relational Mapping) para persistência de dados.
 - **Swagger**: Ferramenta para documentação da API.
