@@ -1,7 +1,6 @@
 package br.com.jupiter.crud.entity;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

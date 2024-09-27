@@ -45,7 +45,7 @@ public class CargoController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public CargoDto salvar(@RequestBody @Valid CargoCreationDto cargoCreationDto) {
+  public CargoDto salvar(@RequestBody @Valid  CargoCreationDto cargoCreationDto) {
     return CargoDto.fromEntity(
       cargoService.salvar(cargoCreationDto.toEntity())
     );
