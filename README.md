@@ -16,6 +16,8 @@ A API é documentada usando **Swagger**. Você pode acessar a documentação atr
 
 ## Estrutura do Banco de Dados
 
+![Descrição da imagem](entity 1.png)
+
 O projeto conta com quatro tabelas principais no banco de dados:
 
 ### 1. Tabela `Usuario`
