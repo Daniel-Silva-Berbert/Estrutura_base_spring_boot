@@ -7,6 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table (name="cargos")
@@ -16,8 +19,11 @@ public class Cargo {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "O cargo deve conter apenas letras e espaços.")
+    @NotBlank(message = "O campo nome é obrigatorio")
     private String nome;
 
+    @NotNull(message = "O campo remuneracao é obrigatorio")
 	  private Float remuneracao;
 
     @OneToMany(mappedBy = "cargo")
@@ -40,7 +46,7 @@ public class Cargo {
         this.remuneracao = remuneracao;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -48,7 +54,7 @@ public class Cargo {
         return nome;
     }
 
-    public float getRemuneracao() {
+    public Float getRemuneracao() {
         return remuneracao;
     }
 }

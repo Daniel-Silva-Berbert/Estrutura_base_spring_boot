@@ -10,7 +10,8 @@ public record UsuarioCreationDto(
   String email,
   String cpf,
   LocalDate nascimento,
-  String password) {
+  String password
+) {
 
   public Usuario toEntity() {
     return new Usuario(nome, userName, email, cpf, nascimento, password);

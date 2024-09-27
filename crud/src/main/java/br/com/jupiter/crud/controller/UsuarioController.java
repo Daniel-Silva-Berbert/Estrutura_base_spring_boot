@@ -29,6 +29,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/usuarios")
@@ -133,7 +140,7 @@ public class UsuarioController {
     )
   })
   @Operation(summary = "Rota para criar um Usuário.")
-  public UsuarioDto salvar(@RequestBody UsuarioCreationDto usuarioCreationDto) {
+public UsuarioDto salvar(@RequestBody @Valid  UsuarioCreationDto usuarioCreationDto) {
     return UsuarioDto.fromEntity(
       usuarioService.salvar(usuarioCreationDto.toEntity())
     );
@@ -162,7 +169,7 @@ public class UsuarioController {
         required = true,
         example = "123"
     )
-  public UsuarioDto editar(@PathVariable Long id, @RequestBody UsuarioCreationDto usuarioCreationDto)
+  public UsuarioDto editar(@PathVariable Long id, @RequestBody @Valid UsuarioCreationDto usuarioCreationDto)
     throws EntityNotFoundException {
     return UsuarioDto.fromEntity(
       usuarioService.editar(id, usuarioCreationDto.toEntity())

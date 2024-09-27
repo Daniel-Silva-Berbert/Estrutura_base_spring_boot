@@ -7,6 +7,7 @@ import br.com.jupiter.crud.entity.Cargo;
 import br.com.jupiter.crud.service.CargoService;
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
 import br.com.jupiter.crud.service.exception.NameNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -44,14 +45,14 @@ public class CargoController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public CargoDto salvar(@RequestBody CargoCreationDto cargoCreationDto) {
+  public CargoDto salvar(@RequestBody @Valid  CargoCreationDto cargoCreationDto) {
     return CargoDto.fromEntity(
       cargoService.salvar(cargoCreationDto.toEntity())
     );
   }
 
   @PutMapping("/{id}")
-  public CargoDto editar(@PathVariable Long id, @RequestBody CargoCreationDto cargoCreationDto) throws EntityNotFoundException {
+  public CargoDto editar(@PathVariable Long id, @RequestBody @Valid CargoCreationDto cargoCreationDto) throws EntityNotFoundException {
     return CargoDto.fromEntity(
       cargoService.editar(id, cargoCreationDto.toEntity())
     );
