@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/permissoes")
+/*@RestController
+@RequestMapping("/permissoes")*/
 public class PermissaoController {
 
-  private PermissaoService permissaoService;
+  /*private PermissaoService permissaoService;
 
   @Autowired
   public PermissaoController(PermissaoService permissaoService) {
@@ -150,5 +150,5 @@ public class PermissaoController {
     return PermissaoDto.fromEntity(
       permissaoService.delete(id)
     );
-  }
+  }*/
 }

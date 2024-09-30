@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import br.com.jupiter.crud.entity.Permissao;
 import br.com.jupiter.crud.repository.PermissaoRepository;
 
-@Service
+//@Service
 public class PermissaoService {
-    private PermissaoRepository permissaoRepository;
+   /*  private PermissaoRepository permissaoRepository;
 
     @Autowired
     public PermissaoService(PermissaoRepository permissaoRepository)
@@ -52,5 +52,5 @@ public class PermissaoService {
         Permissao permissaoDB = this.getById(id);
         permissaoDB.setNome(permissao.getNome());
         return permissaoRepository.save(permissaoDB);
-    }
+    }*/
 }

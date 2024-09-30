@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.jupiter.crud.entity.Cargo;
 import br.com.jupiter.crud.entity.Permissao;
-import br.com.jupiter.crud.entity.Projeto;
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
 import br.com.jupiter.crud.service.exception.NameNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import br.com.jupiter.crud.repository.UsuarioRepository;
 public class UsuarioService {
     private UsuarioRepository usuarioRepository;
     private CargoService cargoService;
-    private ProjetoService projetoService;
     private PermissaoService permissaoService;
 
 
@@ -24,13 +22,11 @@ public class UsuarioService {
     public UsuarioService(
       UsuarioRepository usuarioRepository,
       CargoService cargoService,
-      ProjetoService projetoService,
       PermissaoService permissaoService
     )
     {
         this.usuarioRepository = usuarioRepository;
         this.cargoService = cargoService;
-        this.projetoService = projetoService;
         this.permissaoService = permissaoService;
     }
     
@@ -84,27 +80,7 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario addUsuarioProjeto(Long usarioId, Long projetoId) throws EntityNotFoundException {
-        Usuario usuario = getById(usarioId);
-
-        Projeto projeto = projetoService.getById(projetoId);
-
-        usuario.getProjetos().add(projeto);
-
-        return usuarioRepository.save(usuario);
-    }
-
-    public Usuario removesuarioProjeto(Long usarioId, Long projetoId) throws EntityNotFoundException {
-        Usuario usuario = getById(usarioId);
-
-        Projeto projeto = projetoService.getById(projetoId);
-
-        usuario.getProjetos().remove(projeto);
-
-        return usuarioRepository.save(usuario);
-    }
-
-    public Usuario addUsuarioPermissao(Long usarioId, Long permissaoId) throws EntityNotFoundException {
+    /*public Usuario addUsuarioPermissao(Long usarioId, Long permissaoId) throws EntityNotFoundException {
         Usuario usuario = getById(usarioId);
 
         Permissao permissao = permissaoService.getById(permissaoId);
@@ -122,5 +98,5 @@ public class UsuarioService {
         permissao.getUsuarios().remove(usuario);
 
         return usuarioRepository.save(usuario);
-    }
+    }*/
 }

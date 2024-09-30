@@ -4,7 +4,7 @@ import br.com.jupiter.crud.entity.Permissao;
 
 public record PermissaoCreationDto(String nome) {
 
-  public Permissao toEntity() {
-    return new Permissao(nome);
-  }
+  // public Permissao toEntity() {
+  //   return new Permissao(nome);
+  // }
 }

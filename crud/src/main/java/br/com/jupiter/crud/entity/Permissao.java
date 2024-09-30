@@ -15,11 +15,11 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-@Entity
-@Table (name="permissoes")
+/*@Entity
+@Table (name="permissoes")*/
 public class Permissao {
 
-    @Id
+   /*  @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -69,5 +69,5 @@ public class Permissao {
 
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
-    }
+    }*/
 }

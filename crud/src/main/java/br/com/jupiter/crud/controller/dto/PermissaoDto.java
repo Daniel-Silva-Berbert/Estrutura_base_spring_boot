@@ -7,10 +7,10 @@ import java.util.List;
 
 public record PermissaoDto(Long id, String nome) {
 
-  public static PermissaoDto fromEntity(Permissao permissao) {
-    return new PermissaoDto(
-      permissao.getId(),
-      permissao.getNome()
-    );
-  }
+  // public static PermissaoDto fromEntity(Permissao permissao) {
+  //   return new PermissaoDto(
+  //     permissao.getId(),
+  //     permissao.getNome()
+  //   );
+  // }
 }

@@ -30,11 +30,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -291,98 +286,8 @@ public UsuarioDto salvar(@RequestBody @Valid  UsuarioCreationDto usuarioCreation
     );
   }
 
-  @PutMapping("/{usuarioId}/projeto/{projetoId}")
-  @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Projeto do usuário definido com sucesso",
-      content = @Content(
-        mediaType = "application/json",
-        schema = @Schema(implementation = UsuarioDto.class)
-        )
-      ),
-    @ApiResponse(
-      responseCode = "400",
-      description = "ID inválido ou não encontrado",
-      content = @Content(mediaType = "application/json")
-      ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Usuário ou projeto não encontrado",
-      content = @Content(mediaType = "application/json")
-      ),
-    @ApiResponse(
-      responseCode = "500",
-      description = "Erro interno do servidor",
-      content = @Content(mediaType = "application/json")
-      )
-})
-  @Operation(summary = "Rota para definir o projeto de um Usuário.")
-  @Parameter(
-        name = "usuarioId",
-        description = "ID do usuário.",
-        required = true,
-        example = "123"
-    )
-    @Parameter(
-        name = "projetoId",
-        description = "ID do projeto.",
-        required = true,
-        example = "123"
-    )
-  public UsuarioDto addUsuarioProjeto(@PathVariable Long usuarioId, @PathVariable Long projetoId) throws EntityNotFoundException {
-    return UsuarioDto.fromEntity(
-      usuarioService.addUsuarioProjeto(usuarioId, projetoId)
-    );
-  }
-
-  @DeleteMapping("/{usuarioId}/projeto/{projetoId}")
-  @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Projeto do usuário removido com sucesso",
-      content = @Content(
-        mediaType = "application/json",
-        schema = @Schema(implementation = UsuarioDto.class)
-        )
-      ),
-    @ApiResponse(
-      responseCode = "400",
-      description = "ID inválido ou não encontrado",
-      content = @Content(mediaType = "application/json")
-      ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Usuário ou projeto não encontrado",
-      content = @Content(mediaType = "application/json")
-      ),
-    @ApiResponse(
-      responseCode = "500",
-      description = "Erro interno do servidor",
-      content = @Content(mediaType = "application/json")
-      )
-})
-  @Operation(summary = "Rota para remover Usuário de um projeto.")
-  @Parameter(
-        name = "usuarioId",
-        description = "ID do usuário.",
-        required = true,
-        example = "123"
-    )
-    @Parameter(
-        name = "projetoId",
-        description = "ID do projeto.",
-        required = true,
-        example = "123"
-    )
-  public UsuarioDto removeUsuarioProjeto(@PathVariable Long usuarioId, @PathVariable Long projetoId) throws EntityNotFoundException {
-    return UsuarioDto.fromEntity(
-      usuarioService.removesuarioProjeto(usuarioId, projetoId)
-    );
-  }
-
   
-  @PutMapping("/{usuarioId}/permissao/{permissaoId}")
+  /*@PutMapping("/{usuarioId}/permissao/{permissaoId}")
   @ApiResponses(value = {
     @ApiResponse(
       responseCode = "200",
@@ -470,5 +375,5 @@ public UsuarioDto salvar(@RequestBody @Valid  UsuarioCreationDto usuarioCreation
     return UsuarioDto.fromEntity(
       usuarioService.removeUsuarioPermissao(usuarioId, permissaoId)
     );
-  }
+  }*/
 }
