@@ -3,7 +3,6 @@ package br.com.jupiter.crud.service;
 import java.util.List;
 
 import br.com.jupiter.crud.entity.Cargo;
-import br.com.jupiter.crud.entity.Permissao;
 import br.com.jupiter.crud.entity.Pessoa;
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
