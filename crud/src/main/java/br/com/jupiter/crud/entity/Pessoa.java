@@ -36,7 +36,7 @@ public class Pessoa {
     @Column(nullable = false)
     private LocalDate nascimento;
 
-    @OneToOne(mappedBy = "pessoas")
+    @OneToOne(mappedBy = "pessoa")
     private Usuario usuario;
 
     public Pessoa(){}
@@ -63,6 +63,10 @@ public class Pessoa {
         this.nome = nome;
     }
 
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     public String getCpf() {
         return cpf;
     }
@@ -76,5 +80,9 @@ public class Pessoa {
 
     public String getNome() {
         return nome;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 }

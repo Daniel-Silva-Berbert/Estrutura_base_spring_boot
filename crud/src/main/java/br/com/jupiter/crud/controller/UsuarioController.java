@@ -94,7 +94,7 @@ public class UsuarioController {
     );
   }
 
-  @GetMapping("search")
+ /* @GetMapping("search")
   @Operation(summary = "Rota para buscar um Usuário pelo nome.")
   @ApiResponses(value = {
     @ApiResponse(
@@ -119,7 +119,7 @@ public class UsuarioController {
     )
   public List<Usuario> getByName(@RequestParam String usuario) throws NameNotFoundException {
     return usuarioService.getByName(usuario);
-  }
+  }*/
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
@@ -287,11 +287,11 @@ public UsuarioDto salvar(@RequestBody @Valid  UsuarioCreationDto usuarioCreation
   }
 
   
-  /*@PutMapping("/{usuarioId}/permissao/{permissaoId}")
+  @PutMapping("/{usuarioId}/pessoas/{pessoaId}")
   @ApiResponses(value = {
     @ApiResponse(
       responseCode = "200",
-      description = "Permissão do usuário definida com sucesso",
+      description = "Pessoa definida com sucesso no usuário",
       content = @Content(
         mediaType = "application/json",
         schema = @Schema(implementation = UsuarioDto.class)
@@ -304,7 +304,7 @@ public UsuarioDto salvar(@RequestBody @Valid  UsuarioCreationDto usuarioCreation
       ),
     @ApiResponse(
       responseCode = "404",
-      description = "Usuário ou permissão não encontrada",
+      description = "Usuário ou pessoa não encontrada",
       content = @Content(mediaType = "application/json")
       ),
     @ApiResponse(
@@ -313,30 +313,30 @@ public UsuarioDto salvar(@RequestBody @Valid  UsuarioCreationDto usuarioCreation
       content = @Content(mediaType = "application/json")
       )
   })
-  @Operation(summary = "Rota para definir uma permissão a um Usuário.")
+  @Operation(summary = "Rota para definir uma pessoa a um Usuário.")
   @Parameter(
         name = "usuarioId",
         description = "ID do usuário.",
         required = true,
         example = "123"
     )
-    @Parameter(
-        name = "permissaoId",
-        description = "ID da permissão.",
+  @Parameter(
+        name = "pessoaId",
+        description = "ID do pessoa.",
         required = true,
         example = "123"
     )
-  public UsuarioDto addUsuarioPermissao(@PathVariable Long usuarioId, @PathVariable Long permissaoId) throws EntityNotFoundException {
+  public UsuarioDto addUsuarioPessoa(@PathVariable Long usuarioId, @PathVariable Long pessoaId) throws EntityNotFoundException {
     return UsuarioDto.fromEntity(
-      usuarioService.addUsuarioPermissao(usuarioId, permissaoId)
+      usuarioService.addUsuarioPessoa(usuarioId, pessoaId)
     );
   }
 
-  @DeleteMapping("/{usuarioId}/permissao/{permissaoId}")
+  @DeleteMapping("/{usuarioId}/pessoas/{pessoaId}")
   @ApiResponses(value = {
     @ApiResponse(
       responseCode = "200",
-      description = "Permissão do usuário removida com sucesso",
+      description = "Pessoa desvinculada do usuário com sucesso",
       content = @Content(
         mediaType = "application/json",
         schema = @Schema(implementation = UsuarioDto.class)
@@ -349,7 +349,7 @@ public UsuarioDto salvar(@RequestBody @Valid  UsuarioCreationDto usuarioCreation
       ),
     @ApiResponse(
       responseCode = "404",
-      description = "Usuário ou permissão não encontrada",
+      description = "Usuário ou pessoa não encontrada",
       content = @Content(mediaType = "application/json")
       ),
     @ApiResponse(
@@ -358,22 +358,22 @@ public UsuarioDto salvar(@RequestBody @Valid  UsuarioCreationDto usuarioCreation
       content = @Content(mediaType = "application/json")
       )
 })
-  @Operation(summary = "Rota para retirar a permissão a um Usuário.")
+  @Operation(summary = "Rota para desvincular uma pessoa de um usuário..")
   @Parameter(
         name = "usuarioId",
         description = "ID do usuário.",
         required = true,
         example = "123"
     )
-    @Parameter(
-        name = "permissaoId",
-        description = "ID da permissão.",
+  @Parameter(
+        name = "pessoaId",
+        description = "ID do pessoa.",
         required = true,
         example = "123"
     )
-  public UsuarioDto removeUsuarioPermissao(@PathVariable Long usuarioId, @PathVariable Long permissaoId) throws EntityNotFoundException {
+  public UsuarioDto removeUsuarioPessoa(@PathVariable Long usuarioId, @PathVariable Long pessoaId) throws EntityNotFoundException {
     return UsuarioDto.fromEntity(
-      usuarioService.removeUsuarioPermissao(usuarioId, permissaoId)
+      usuarioService.removeUsuarioPessoa(usuarioId, pessoaId)
     );
-  }*/
+  }
 }

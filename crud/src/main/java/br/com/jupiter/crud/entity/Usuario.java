@@ -47,12 +47,13 @@ public class Usuario{
 
     public Usuario(){}
 
-    public Usuario(Long id, String userName, String email, String password, Cargo cargo)
+    public Usuario(Long id, String userName, String email, String password, Pessoa pessoa, Cargo cargo)
     {
         setId(id);
         setUserName(userName);
         setEmail(email);
         setPassword(password);
+        setPessoa(pessoa);
         setCargo(cargo);
     }
 
@@ -76,6 +77,10 @@ public class Usuario{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
     // public void setPermissoes(Permissao permissoes) {
@@ -108,6 +113,10 @@ public class Usuario{
 
     public Cargo getCargo() {
         return cargo;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 }
 

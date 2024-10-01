@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import br.com.jupiter.crud.controller.dto.PermissaoCreationDto;
 import br.com.jupiter.crud.controller.dto.PessoaCreationDto;
 import br.com.jupiter.crud.controller.dto.PessoaDto;
 import br.com.jupiter.crud.entity.Pessoa;
@@ -126,7 +124,7 @@ public class PessoaController {
     @ApiResponse(responseCode = "200", description = "Pessoa atualizada com sucesso",content = @Content(
       mediaType = "application/json",
       array = @ArraySchema(
-        schema = @Schema(implementation = PermissaoCreationDto.class)
+        schema = @Schema(implementation = PessoaCreationDto.class)
       )
     )),
     @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "")),
