@@ -8,12 +8,16 @@ import br.com.jupiter.crud.entity.Projeto;
 import br.com.jupiter.crud.service.exception.EntityNotFoundException;
 import br.com.jupiter.crud.service.exception.NameNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import br.com.jupiter.crud.entity.Usuario;
 import br.com.jupiter.crud.repository.UsuarioRepository;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
     private UsuarioRepository usuarioRepository;
     private CargoService cargoService;
     private ProjetoService projetoService;
@@ -35,7 +39,10 @@ public class UsuarioService {
     }
     
     public Usuario salvar(Usuario usuario) {
-        
+        String hashedPassword = new BCryptPasswordEncoder().encode(usuario.getPassword());
+
+        usuario.setPassword(hashedPassword);
+
         return usuarioRepository.save(usuario);
     }
 
@@ -122,5 +129,11 @@ public class UsuarioService {
         permissao.getUsuarios().remove(usuario);
 
         return usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        return usuarioRepository.findByUserName(userName)
+          .orElseThrow(() -> new UsernameNotFoundException(userName));
     }
 }

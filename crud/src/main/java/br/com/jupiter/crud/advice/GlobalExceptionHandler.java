@@ -9,6 +9,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -85,14 +86,12 @@ public class GlobalExceptionHandler {
     return errors;
   }
 
-  @ExceptionHandler(Exception.class)
-  public ResponseEntity<Map<String, Object>> handleGlobalException(Exception ex) {
+  @ExceptionHandler(BadCredentialsException.class)
+  public ResponseEntity<Map<String, Object>> handleBadCredentialsException(BadCredentialsException ex) {
     Map<String, Object> errorDetails = new HashMap<>();
-    errorDetails.put("timestamp", LocalDateTime.now());
-    errorDetails.put("message", "Ocorreu um erro inesperado. Tente novamente mais tarde.");
-    errorDetails.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+    errorDetails.put("message", "Usuário inexistente ou senha inválida");
 
-    return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
   }
 
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
@@ -101,6 +100,16 @@ public class GlobalExceptionHandler {
     String message = String.format("O campo '%s' recebeu um valor de tipo inválido. Esperado: %s",
       ex.getName(), ex.getRequiredType().getSimpleName());
     return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<Map<String, Object>> handleGlobalException(Exception ex) {
+    Map<String, Object> errorDetails = new HashMap<>();
+    errorDetails.put("timestamp", LocalDateTime.now());
+    errorDetails.put("message", "Ocorreu um erro inesperado. Tente novamente mais tarde.");
+    errorDetails.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+
+    return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
 }

@@ -1,5 +1,6 @@
 package br.com.jupiter.crud.entity;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -16,12 +17,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 
 @Entity
 @Table (name="usuarios")
-public class Usuario extends Pessoa {
+public class Usuario extends Pessoa implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,7 +81,7 @@ public class Usuario extends Pessoa {
         setNome(nome);
         setCpf(cpf);
         setNascimento(nascimento);
-        setUserName(userName);
+        setUsername(userName);
         setEmail(email);
         setPassword(password);
         setPermissoes(permissoes);
@@ -111,7 +114,7 @@ public class Usuario extends Pessoa {
         this.nascimento = nascimento;
     }
 
-    public void setUserName(String userName) {
+    public void setUsername(String userName) {
         this.userName = userName;
     }
 
@@ -150,17 +153,44 @@ public class Usuario extends Pessoa {
     public LocalDate getNascimento() {
         return this.nascimento;
     }
-    
-    public String getUserName() {
-        return userName;
-    }
 
     public String getEmail() {
         return email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
     public String getPassword() {
-        return password;
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.userName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public List<Permissao> getPermissoes() {

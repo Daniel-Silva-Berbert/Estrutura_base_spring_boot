@@ -23,7 +23,7 @@ public record UsuarioDto(
     return new UsuarioDto(
       usuario.getId(),
       usuario.getNome(),
-      usuario.getUserName(),
+      usuario.getUsername(),
       usuario.getEmail(),
       usuario.getNascimento(),
       cargoDto,
