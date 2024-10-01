@@ -1,48 +1,24 @@
 package br.com.jupiter.crud.entity;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.*;
-import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.time.LocalDate;
 
 @Entity
 @Table (name="usuarios")
-public class Usuario extends Pessoa implements UserDetails {
+public class Usuario{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "O nome deve conter apenas letras e espaços.")
-    @NotBlank
-	  @Column(nullable = false)
-    private String nome;
-
-    @NotBlank
-    @CPF
-    @Column(unique = true, nullable = false)
-    private String cpf;
-
-    @NotNull
-    @Column(nullable = false)
-    private LocalDate nascimento;
 
     @NotBlank
     @Column(unique = true, nullable = false)
@@ -58,43 +34,32 @@ public class Usuario extends Pessoa implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany(mappedBy = "usuarios")
-    private List<Permissao> permissoes = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
+    private Pessoa pessoa;
+
+    // @ManyToMany(mappedBy = "usuarios")
+    // private List<Permissao> permissoes = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cargo_id", referencedColumnName = "id")
     private Cargo cargo;
 
-    @ManyToMany( fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "usuarios_projetos",
-        joinColumns = @JoinColumn(name = "usuario_id"),
-        inverseJoinColumns = @JoinColumn(name = "projeto_id")
-    )
-    private List<Projeto> projetos = new ArrayList<>();
-
     public Usuario(){}
 
-    public Usuario(Long id, String nome, String cpf, LocalDate nascimento, String userName, String email, String password, Permissao permissoes, Cargo cargo, Projeto projeto)
+    public Usuario(Long id, String userName, String email, String password, Pessoa pessoa, Cargo cargo)
     {
         setId(id);
-        setNome(nome);
-        setCpf(cpf);
-        setNascimento(nascimento);
-        setUsername(userName);
+        setUserName(userName);
         setEmail(email);
         setPassword(password);
-        setPermissoes(permissoes);
+        setPessoa(pessoa);
         setCargo(cargo);
-        setProjeto(projeto);
     }
 
-    public Usuario(String nome, String userName, String email, String cpf, LocalDate nascimento  ,String password) {
-        this.nome = nome;
+    public Usuario(String userName, String email  ,String password) {
         this.userName = userName;
         this.email = email;
-        this.cpf = cpf;
-        this.nascimento = nascimento;
         this.password = password;
     }
 
@@ -102,19 +67,7 @@ public class Usuario extends Pessoa implements UserDetails {
         this.id = id;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-    
-    public void setNascimento(LocalDate nascimento) {
-        this.nascimento = nascimento;
-    }
-
-    public void setUsername(String userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
@@ -126,32 +79,24 @@ public class Usuario extends Pessoa implements UserDetails {
         this.password = password;
     }
 
-    public void setPermissoes(Permissao permissoes) {
-        this.permissoes.add(permissoes);
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
+
+    // public void setPermissoes(Permissao permissoes) {
+    //     this.permissoes.add(permissoes);
+    // }
 
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
 
-    public void setProjeto(Projeto projeto) {
-        this.projetos.add(projeto);
-    }
-
     public Long getId() {
         return id;
     }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getCpf() {
-        return this.cpf;
-    }
     
-    public LocalDate getNascimento() {
-        return this.nascimento;
+    public String getUserName() {
+        return userName;
     }
 
     public String getEmail() {
@@ -193,16 +138,16 @@ public class Usuario extends Pessoa implements UserDetails {
         return true;
     }
 
-    public List<Permissao> getPermissoes() {
-        return permissoes;
-    }
+    // public List<Permissao> getPermissoes() {
+    //     return permissoes;
+    // }
 
     public Cargo getCargo() {
         return cargo;
     }
 
-    public List<Projeto> getProjetos() {
-        return projetos;
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 }
 
