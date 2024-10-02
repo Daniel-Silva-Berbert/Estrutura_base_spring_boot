@@ -50,7 +50,7 @@ public class AuthController {
     return new TokenDto(token);
   }
 
-    @PostMapping("/register")
+  @PostMapping("/register")
   public ResponseEntity<?> register(@RequestBody @Valid RegisterDTO data){
     
     Optional<Usuario> existingUser = this.usuarioRepository.findByUserName(data.userName());
@@ -65,8 +65,9 @@ public class AuthController {
 
     
     this.usuarioRepository.save(newUser);
+    String token = tokenService.generateToken(newUser.getUserName());
 
-    return ResponseEntity.status(HttpStatus.CREATED).build();
+    return ResponseEntity.status(HttpStatus.CREATED).body(new TokenDto(token));
 }
 
 }
