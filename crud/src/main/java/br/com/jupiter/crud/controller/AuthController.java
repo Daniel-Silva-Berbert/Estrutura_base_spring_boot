@@ -49,36 +49,24 @@ public class AuthController {
 
     return new TokenDto(token);
   }
-  
-  /*@PostMapping("/register")
-    public ResponseEntity<Usuario> register(@RequestBody @Valid RegisterDTO data){
-        if(this.usuarioRepository.findByUserName(data.userName()) != null) return ResponseEntity.badRequest().build();
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        Usuario newUser = new Usuario(data.userName(), data.email(), encryptedPassword, data.permissao());
-
-        this.usuarioRepository.save(newUser);
-
-        return ResponseEntity.ok().build();
-    }*/
 
     @PostMapping("/register")
   public ResponseEntity<?> register(@RequestBody @Valid RegisterDTO data){
-    // Usa o Optional para verificar se o usuário já existe
+    
     Optional<Usuario> existingUser = this.usuarioRepository.findByUserName(data.userName());
 
     if (existingUser.isPresent()) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body("UserName já existe!"); // Retorna um erro 409
     }
 
-    // Criptografa a senha antes de salvar
+    
     String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
     Usuario newUser = new Usuario(data.userName(), data.email(), encryptedPassword, data.permissao());
 
-    // Salva o novo usuário
+    
     this.usuarioRepository.save(newUser);
 
-    return ResponseEntity.status(HttpStatus.CREATED).build(); // Retorna 201 para criação bem-sucedida
+    return ResponseEntity.status(HttpStatus.CREATED).build();
 }
 
 }
