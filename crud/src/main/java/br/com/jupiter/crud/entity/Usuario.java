@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
@@ -16,7 +17,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table (name="usuarios")
@@ -40,33 +43,35 @@ public class Usuario implements UserDetails{
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private Permissao permissao;
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
+    @JoinColumn(name = "pessoa_id", referencedColumnName = "id", nullable = true)
     private Pessoa pessoa;
 
-    // @ManyToMany(mappedBy = "usuarios")
-    // private List<Permissao> permissoes = new ArrayList<>();
-
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cargo_id", referencedColumnName = "id")
+    @JoinColumn(name = "cargo_id", referencedColumnName = "id", nullable = true)
     private Cargo cargo;
 
     public Usuario(){}
 
-    public Usuario(Long id, String userName, String email, String password, Pessoa pessoa, Cargo cargo)
+    public Usuario(Long id, String userName, String email, String password, Permissao permissao, Pessoa pessoa, Cargo cargo)
     {
         setId(id);
         setUserName(userName);
         setEmail(email);
         setPassword(password);
+        setPermissao(permissao);
         setPessoa(pessoa);
         setCargo(cargo);
     }
 
-    public Usuario(String userName, String email  ,String password) {
+    public Usuario(String userName, String email  ,String password, Permissao permissao) {
         this.userName = userName;
         this.email = email;
         this.password = password;
+        this.permissao = permissao;
     }
 
     public void setId(Long id) {
@@ -89,12 +94,12 @@ public class Usuario implements UserDetails{
         this.pessoa = pessoa;
     }
 
-    // public void setPermissoes(Permissao permissoes) {
-    //     this.permissoes.add(permissoes);
-    // }
-
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
+    }
+
+    public void setPermissao(Permissao permissao) {
+        this.permissao = permissao;
     }
 
     public Long getId() {
@@ -111,7 +116,8 @@ public class Usuario implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        if(this.permissao == Permissao.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
@@ -144,10 +150,6 @@ public class Usuario implements UserDetails{
         return true;
     }
 
-    // public List<Permissao> getPermissoes() {
-    //     return permissoes;
-    // }
-
     public Cargo getCargo() {
         return cargo;
     }
@@ -155,6 +157,8 @@ public class Usuario implements UserDetails{
     public Pessoa getPessoa() {
         return pessoa;
     }
+
+    
 }
 
 
